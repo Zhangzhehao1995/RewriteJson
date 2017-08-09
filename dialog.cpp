@@ -16,6 +16,7 @@ Dialog::Dialog(QWidget *parent):
     new_UiDialog->NewTableWidget->setSpan(0, 1, 1, 2);//combine cells
     new_UiDialog->NewTableWidget->setSpan(1, 1, 1, 2);
     new_UiDialog->NewTableWidget->setSpan(2, 1, 1, 2);
+    new_UiDialog->NewTableWidget->setSpan(4, 1, 1, 2);
 
     connect(new_UiDialog->addNew,SIGNAL(clicked()),this,SLOT(finish_edit()));
     connect(new_UiDialog->clearNew,SIGNAL(clicked()),this,SLOT(clear_edit()));
@@ -46,7 +47,7 @@ void Dialog::initNewTable(int i, int j)
     item4->setFlags(item4->flags()&(~Qt::ItemIsEditable));
     new_UiDialog->NewTableWidget->setItem(4,0,item4);
 
-    QTableWidgetItem *item5 = new QTableWidgetItem(NULL);
+    QTableWidgetItem *item5 = new QTableWidgetItem();
     item5->setFlags(item5->flags()&(~Qt::ItemIsEditable));
     new_UiDialog->NewTableWidget->setItem(4,1,item5);
 }
@@ -223,7 +224,7 @@ void Dialog::clear_edit()
     item4->setFlags(item4->flags()&(~Qt::ItemIsEditable));
     new_UiDialog->NewTableWidget->setItem(4,0,item4);
 
-    QTableWidgetItem *item5 = new QTableWidgetItem(NULL);
+    QTableWidgetItem *item5 = new QTableWidgetItem();
     item5->setFlags(item5->flags()&(~Qt::ItemIsEditable));
     new_UiDialog->NewTableWidget->setItem(4,1,item5);
 }

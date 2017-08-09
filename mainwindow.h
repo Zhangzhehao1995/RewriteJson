@@ -54,8 +54,6 @@ private slots:
 
     void showtheChange(int framenum, int callnum, QJsonObject addItemObject, QString addText);
 
-
-
 private:
     Ui::MainWindow *ui;
     QStringList resave_string;
