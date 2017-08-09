@@ -48,12 +48,10 @@ void MainWindow::showTableWidget()
     int addItemNum;
     if(parent == NULL)
     {
-        QString frame_num = newitemlocation->text(0).remove(0,6);
-        addFrameNum = frame_num.toInt()-1;
+        addFrameNum = ui->treeJsonFile->indexOfTopLevelItem(newitemlocation);
         addItemNum = frame_start[addFrameNum]-1;
     }else{
-        QString frame_num = newitemlocation->parent()->text(0).remove(0,6);
-        addFrameNum = frame_num.toInt()-1;
+        addFrameNum = ui->treeJsonFile->indexOfTopLevelItem(parent);
         int frame_start_num = frame_start[addFrameNum];
         int row=parent->indexOfChild(newitemlocation);
         addItemNum = frame_start_num+row;
@@ -75,14 +73,14 @@ void MainWindow::on_actionOpen_clicked()
      QString filedir = QFileDialog::getOpenFileName(this, tr("Open File"),"/home/liamzhang/samurai_data/",tr("Json Files(*.json)"));
      if (filedir.isEmpty())
      {
-         QMessageBox::warning(this,"Warning","Fail to get a Json file",QMessageBox::Yes);
+         QMessageBox::warning(this,"Warning",tr("Fail to get a Json file"),QMessageBox::Yes);
          return;
      }
 
      std::ifstream fin(filedir.toStdString().c_str());
      if (!fin.is_open())
      {
-          QMessageBox::warning(this,"Warnning","Can't open the Json file",QMessageBox::Yes);
+          QMessageBox::warning(this,"Warnning",tr("Can't open the Json file"),QMessageBox::Yes);
           return;
      }
 
@@ -283,7 +281,7 @@ void MainWindow::on_treeJsonFile_itemSelectionChanged()
         QTableWidgetItem *item4 = new QTableWidgetItem("arg:");
         item4->setFlags(item4->flags()&(~Qt::ItemIsEditable));
         ui->ItemInformation->setItem(currentTableRow,0,item4);
-        QTableWidgetItem *item5 = new QTableWidgetItem(NULL);
+        QTableWidgetItem *item5 = new QTableWidgetItem();
         item5->setFlags(item5->flags()&(~Qt::ItemIsEditable));
         ui->ItemInformation->setItem(currentTableRow,1,item5);
         QJsonArray argtype = selectItemObject["5 arg_type"].toArray();
@@ -443,9 +441,8 @@ void MainWindow::on_actionSetChange_clicked()
     int frame_start_num = frame_start[num];
     int row=parent->indexOfChild(item);
     int changedItemNum = frame_start_num+row;
-
     int currentTableRow = 0;
-    resave_string.removeAt(changedItemNum+1);
+    resave_string.removeAt(changedItemNum);
 
     QJsonObject changedItemObject;
     if(ui->ItemInformation->item(currentTableRow,1) == NULL){return;}
